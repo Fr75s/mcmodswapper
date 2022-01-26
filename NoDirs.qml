@@ -24,7 +24,7 @@ Item {
         anchors.top: parent.top
         anchors.topMargin: parent.height * .05
 
-        text: "Create Directories"
+        text: "Set Folders"
 
         horizontalAlignment: Text.AlignHCenter
 
@@ -41,7 +41,7 @@ Item {
         anchors.top: noDirTitle.bottom
         anchors.topMargin: parent.height * .025
 
-        text: "Please set each directory using the buttons below."
+        text: "Please set each folder using the buttons below."
 
         horizontalAlignment: Text.AlignHCenter
 
@@ -66,7 +66,7 @@ Item {
         anchors.top: parent.top
         anchors.topMargin: parent.height * 0.35
 
-        onClicked: mcDS.open() // Open Minecraft Directory set dialog
+        onClicked: mineChooser.open() // Open Minecraft Directory set dialog
 
         Text {
             anchors.fill: parent
@@ -83,7 +83,6 @@ Item {
     }
 
     RoundButton {
-        // Set McButton, heh
         id: setSwButton
 
         width: parent.width * 0.6
@@ -95,7 +94,7 @@ Item {
         anchors.top: setMcButton.bottom
         anchors.topMargin: parent.height * 0.1
 
-        onClicked: console.log("Clicked!") // Open Swap Directory set dialog
+        onClicked: swapChooser.open() // Open Swap Directory set dialog
 
         Text {
             anchors.fill: parent
@@ -111,26 +110,65 @@ Item {
         }
     }
 
+    RoundButton {
+        id: helpButton
+
+        width: height
+        height: parent.height * 0.1
+
+        radius: height / 4
+        flat: false
+
+        icon.name: "question"
+
+        anchors.top: parent.top
+        anchors.margins: parent.height * 0.05
+        anchors.right: parent.right
+
+        onClicked: console.log("Help!") // Open Swap Directory set dialog
+    }
+
     //
     // Button File Dialogs
     //
 
     FileDialog {
-        id: mcDS
+        id: mineChooser
         title: "Choose your Minecraft Directory"
-        folder: "/home/"
+        folder: shortcuts.home
         selectFolder: true
 
         modality: Qt.ApplicationModal
 
         onAccepted: {
-            console.log("You chose: " + mcDS.folder)
-            root.mcPath(mcDS.folder)
-            mcDS.close()
+            console.log("You chose: " + mineChooser.folder)
+            root.setMcPath(mineChooser.folder)
+            mineChooser.close()
         }
         onRejected: {
-            mcDS.log("Canceled")
-            mcDS.close()
+            console.log("Canceled")
+            mineChooser.close()
+        }
+
+        // Component.onCompleted: visible = false
+    }
+
+    FileDialog {
+        id: swapChooser
+        title: "Choose your Modswap Directory"
+        folder: shortcuts.home
+        selectFolder: true
+
+        modality: Qt.ApplicationModal
+
+        onAccepted: {
+            console.log("You chose: " + swapChooser.folder)
+            root.setSwPath(swapChooser.folder)
+            swapChooser.close()
+        }
+        onRejected: {
+            console.log("Canceled")
+            swapChooser.close()
         }
 
         // Component.onCompleted: visible = false

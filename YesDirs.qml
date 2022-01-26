@@ -21,13 +21,29 @@ Item {
         anchors.top: parent.top
         anchors.topMargin: parent.height * .05
 
-        text: "Which Mod Swap do you wish to use?"
+        text: "Which Mod Configuration do you wish to use?"
 
         horizontalAlignment: Text.AlignHCenter
 
         font.pixelSize: height
         font.family: gilroyLight.name
         font.bold: true
+    }
+
+    Text {
+        id: yesDirSubtitle
+        width: parent.width
+        height: parent.height * .035
+
+        anchors.top: titleLabel.bottom
+        anchors.topMargin: parent.height * .025
+
+        text: "Select one using the buttons below."
+
+        horizontalAlignment: Text.AlignHCenter
+
+        font.pixelSize: height
+        font.family: gilroyLight.name
     }
 
     GridView {
@@ -51,6 +67,14 @@ Item {
 
             width: swapView.cellWidth
             height: swapView.cellHeight
+
+            Rectangle {
+                anchors.fill: parent
+                anchors.margins: parent.width * 0.05
+
+                color: "#EEEEEE"
+                radius: height * .2
+            }
 
             Text {
                 anchors.fill: parent
